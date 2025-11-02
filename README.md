@@ -152,13 +152,15 @@ As a user, I want to filter my inventory list by place so that I can easily see 
 * Custom Image: (Optional) A photo uploaded by the user if an API image is not available or incorrect.
 
 
-## VII. Team Members
-(Responsibilities of each member to be determined in the next meeting)
-* Harshitha Baratam
-* Narayan Shanku
-* Pooja Dhumal
-* Rohan Barai
+## VII. Team Composition
 
-## VIII. Weekly Team Meeting
+   ### Team Members
+      (Responsibilities of each member to be determined in the next meeting)
+      * Harshitha Baratam
+      * Narayan Shanku
+      * Pooja Dhumal
+      * Rohan Barai
 
-Every Thursday, 8:00 PM - 09:00 PM at Lindner College of Business
+   ### Weekly Team Meeting
+
+      Every Thursday, 8:00 PM - 09:00 PM at Lindner College of Business
