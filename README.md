@@ -158,3 +158,7 @@ Link - https://github.com/dhumalpn/XML-Final-Project.git
 * Narayan Shanku
 * Pooja Dhumal
 * Rohan Barai
+
+## VIII. Weekly Team Meeting
+
+Every Thursday, 8:00 PM - 09:00 PM at Lindner College of Business
