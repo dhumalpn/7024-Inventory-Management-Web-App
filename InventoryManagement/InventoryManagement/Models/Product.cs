@@ -3,7 +3,7 @@
     public class Product
     {
         public int ProductId { get; set; }
-        public string UPC { get; set; } = string.Empty; // Universal Product Code
+        public string UPC { get; set; } = string.Empty; 
         public string Title { get; set; } = string.Empty;
         public string? Brand { get; set; }
         public string? Model { get; set; }
