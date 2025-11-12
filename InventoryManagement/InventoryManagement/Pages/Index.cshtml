@@ -1,10 +1,42 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home Inventory";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="container mt-4">
+    <h2>Home Inventory</h2>
+
+    <!-- Search -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <label for="upcInput" class="form-label">Search by UPC</label>
+            <div class="d-flex gap-2">
+                <input id="upcInput" class="form-control" placeholder="e.g., 012345678905" />
+                <button id="btnSearch" class="btn btn-primary">Lookup</button>
+            </div>
+            <small class="text-muted">Uses UPCItemDB trial endpoint.</small>
+
+            <div id="searchResult" class="mt-3" style="display:none;">
+                <div class="d-flex gap-3 align-items-start">
+                    <img id="srImage" src="" alt="" style="max-width:100px; display:none;" />
+                    <div>
+                        <h5 id="srTitle"></h5>
+                        <div><strong>Brand:</strong> <span id="srBrand"></span></div>
+                        <div><strong>Model:</strong> <span id="srModel"></span></div>
+                        <div><strong>Category:</strong> <span id="srCategory"></span></div>
+                        <div><strong>UPC:</strong> <span id="srUpc"></span></div>
+
+                        <div class="mt-2 d-flex gap-2">
+                            <input id="srQty" type="number" min="1" value="1" class="form-control" style="width:90px;" />
+                            <input id="srLocation" class="form-control" placeholder="Location (optional)" style="max-width:250px;" />
+                            <button id="btnAdd" class="btn btn-success">Add to Inventory</button>
+                        </div>
+                        <div id="srMsg" class="text-success mt-2" style="display:none;">Added!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="searchError" class="alert alert-warning mt-3" style="display:none;"></div>
+        </div>
+    </div>
