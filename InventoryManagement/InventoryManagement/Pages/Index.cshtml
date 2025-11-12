@@ -1,25 +1,74 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home Inventory";
+    ViewData["Title"] = "House Buddy";
 }
 
-<div class="container mt-4">
-    <h2>Home Inventory</h2>
+<!-- Background hero (fixed, behind content) -->
+<div class="background-hero" aria-hidden="true">
+    <div class="shape shape-left" aria-hidden="true">
+        <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0" stop-color="#FDEFE8" />
+                    <stop offset="1" stop-color="#FBEFE8" />
+                </linearGradient>
+            </defs>
+            <g fill="url(#g1)">
+                <path d="M300 30C380 30 520 70 548 150C576 230 520 360 420 420C320 480 190 520 110 460C30 400 20 230 80 150C140 70 220 30 300 30Z" />
+            </g>
+        </svg>
+    </div>
 
-    <!-- Search -->
-    <div class="card mb-3">
-        <div class="card-body">
-            <label for="upcInput" class="form-label">Search by UPC</label>
-            <div class="d-flex gap-2">
-                <input id="upcInput" class="form-control" placeholder="e.g., 012345678905" />
-                <button id="btnSearch" class="btn btn-primary">Lookup</button>
+    <div class="shape shape-right" aria-hidden="true">
+        <svg viewBox="0 0 520 520" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="g2" x1="0" x2="1">
+                    <stop offset="0" stop-color="#FFECD1" />
+                    <stop offset="1" stop-color="#FDEFE8" />
+                </linearGradient>
+            </defs>
+            <g fill="url(#g2)">
+                <path d="M260 10C330 30 420 50 490 120C560 190 520 320 420 420C320 520 190 490 110 420C30 350 10 200 60 120C110 40 190 -10 260 10Z" />
+            </g>
+        </svg>
+    </div>
+</div>
+
+<div class="container home-outer mt-4">
+
+    <!-- give hero vertical presence -->
+    <div class="home-hero-spacer"></div>
+
+    <!-- Search (Sunset Mist: open & airy, soft card) -->
+    <div class="home-card mb-3">
+        <div class="title-with-icon mb-3">
+            <div class="title-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M20 4c-3 3-6 4-10 4 0 0 2 2 2 6 0 0-4-2-8 2 8 0 10-10 16-14z"
+                          fill="#E07A5F" opacity="0.95" />
+                </svg>
             </div>
-            <small class="text-muted">Uses UPCItemDB trial endpoint.</small>
+            <h1 class="page-title mb-0">House Buddy</h1>
+        </div>
 
+        <div class="home-card-body">
+            <label for="upcInput" class="form-label">Search by UPC</label>
+            <form class="mb-0" role="search" aria-label="Search by UPC" onsubmit="return false;">
+                <div class="home-search-row">
+                    <input id="upcInput" name="upc" class="form-control"
+                           placeholder="e.g., 012345678905" aria-label="UPC code" />
+                    <button id="btnSearch" class="btn btn-lookup" type="button">Lookup</button>
+                </div>
+              
+            </form>
+
+            <!-- Search result area (kept) -->
             <div id="searchResult" class="mt-3" style="display:none;">
                 <div class="d-flex gap-3 align-items-start">
-                    <img id="srImage" src="" alt="" style="max-width:100px; display:none;" />
+                    <img id="srImage" src="" alt=""
+                         style="max-width:100px; display:none;" />
                     <div>
                         <h5 id="srTitle"></h5>
                         <div><strong>Brand:</strong> <span id="srBrand"></span></div>
@@ -28,11 +77,17 @@
                         <div><strong>UPC:</strong> <span id="srUpc"></span></div>
 
                         <div class="mt-2 d-flex gap-2">
-                            <input id="srQty" type="number" min="1" value="1" class="form-control" style="width:90px;" />
-                            <input id="srLocation" class="form-control" placeholder="Location (optional)" style="max-width:250px;" />
+                            <input id="srQty" type="number" min="1" value="1"
+                                   class="form-control" style="width:90px;" />
+                            <input id="srLocation" class="form-control"
+                                   placeholder="Location (optional)"
+                                   style="max-width:250px;" />
                             <button id="btnAdd" class="btn btn-success">Add to Inventory</button>
                         </div>
-                        <div id="srMsg" class="text-success mt-2" style="display:none;">Added!</div>
+                        <div id="srMsg" class="text-success mt-2"
+                             style="display:none;">
+                            Added!
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,4 +95,5 @@
             <div id="searchError" class="alert alert-warning mt-3" style="display:none;"></div>
         </div>
     </div>
-    </div>
+
+</div>
