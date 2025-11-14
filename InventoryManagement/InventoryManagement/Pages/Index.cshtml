@@ -4,7 +4,8 @@
     ViewData["Title"] = "House Buddy";
 }
 
-<!-- Background hero (fixed, behind content) -->
+
+
 <div class="background-hero" aria-hidden="true">
     <div class="shape shape-left" aria-hidden="true">
         <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -37,10 +38,8 @@
 
 <div class="container home-outer mt-4">
 
-    <!-- give hero vertical presence -->
     <div class="home-hero-spacer"></div>
 
-    <!-- Search (Sunset Mist: open & airy, soft card) -->
     <div class="home-card mb-3">
         <div class="title-with-icon mb-3">
             <div class="title-icon" aria-hidden="true">
@@ -61,32 +60,65 @@
                            placeholder="e.g., 012345678905" aria-label="UPC code" />
                     <button id="btnSearch" class="btn btn-lookup" type="button">Lookup</button>
                 </div>
-              
             </form>
 
-            <!-- Search result area (kept) -->
             <div id="searchResult" class="mt-3" style="display:none;">
-                <div class="d-flex gap-3 align-items-start">
-                    <img id="srImage" src="" alt=""
-                         style="max-width:100px; display:none;" />
-                    <div>
-                        <h5 id="srTitle"></h5>
-                        <div><strong>Brand:</strong> <span id="srBrand"></span></div>
-                        <div><strong>Model:</strong> <span id="srModel"></span></div>
-                        <div><strong>Category:</strong> <span id="srCategory"></span></div>
-                        <div><strong>UPC:</strong> <span id="srUpc"></span></div>
+                <div class="row g-3 align-items-start">
+                    <div class="col-auto">
+                        <img id="srImage"
+                             src="https://media.istockphoto.com/id/1457433817/photo/group-of-healthy-food-for-flexitarian-diet.jpg?s=1024x1024&w=is&k=20&c=iBBM7YTn5Rf-QhCd0kkvFaDNLV6Rb02iMQlS39LSSTI="
+                             alt="Product image"
+                             style="max-width:120px; border-radius:8px; background:#f3f3f3; padding:4px;" />
+                    </div>
 
-                        <div class="mt-2 d-flex gap-2">
-                            <input id="srQty" type="number" min="1" value="1"
-                                   class="form-control" style="width:90px;" />
-                            <input id="srLocation" class="form-control"
-                                   placeholder="Location (optional)"
-                                   style="max-width:250px;" />
-                            <button id="btnAdd" class="btn btn-success">Add to Inventory</button>
+                    <div class="col">
+                        <h5 id="srTitle" class="mb-2"></h5>
+                        <div><span class="field-label">Brand:</span> <span id="srBrand"></span></div>
+                        <div><span class="field-label">Model:</span> <span id="srModel"></span></div>
+                        <div><span class="field-label">Category:</span> <span id="srCategoryText"></span></div>
+                        <div><span class="field-label">UPC:</span> <span id="srUpc"></span></div>
+
+                        <hr class="mt-3 mb-3" />
+
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <label for="srQty" class="field-label mb-1">Quantity</label>
+                                <input id="srQty" type="number" min="1" value="1"
+                                       class="form-control" />
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <label for="srExpiry" class="field-label mb-1">Expiry Date</label>
+                                <input id="srExpiry" type="date" class="form-control" />
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label for="srCategorySelect" class="field-label mb-1">Category</label>
+                                <select id="srCategorySelect" class="form-select">
+                                    <option value="">Select category</option>
+                                    <option value="Pantry">Pantry</option>
+                                    <option value="Fridge">Fridge</option>
+                                    <option value="Freezer">Freezer</option>
+                                    <option value="Bathroom">Bathroom</option>
+                                    <option value="Cleaning">Cleaning</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label for="srLocation" class="field-label mb-1">Location (optional)</label>
+                                <input id="srLocation" class="form-control"
+                                       placeholder="e.g., Kitchen cabinet, Top shelf" />
+                            </div>
                         </div>
+
+                        <div class="mt-3 d-flex flex-wrap gap-2">
+                            <button id="btnAdd" class="btn btn-success" type="button">Add to Inventory</button>
+                        </div>
+
                         <div id="srMsg" class="text-success mt-2"
                              style="display:none;">
-                            Added!
+                            Added to inventory (demo only, no database yet).
                         </div>
                     </div>
                 </div>
@@ -97,3 +129,75 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script>
+        const upcInput = document.getElementById('upcInput');
+        const btnSearch = document.getElementById('btnSearch');
+        const btnAdd = document.getElementById('btnAdd');
+        const searchError = document.getElementById('searchError');
+        const searchResult = document.getElementById('searchResult');
+
+        const srImage = document.getElementById('srImage');
+        const srTitle = document.getElementById('srTitle');
+        const srBrand = document.getElementById('srBrand');
+        const srModel = document.getElementById('srModel');
+        const srCategoryText = document.getElementById('srCategoryText');
+        const srUpc = document.getElementById('srUpc');
+
+        const srQty = document.getElementById('srQty');
+        const srExpiry = document.getElementById('srExpiry');
+        const srCategorySelect = document.getElementById('srCategorySelect');
+        const srLocation = document.getElementById('srLocation');
+        const srMsg = document.getElementById('srMsg');
+
+        btnSearch.addEventListener('click', function () {
+            const upc = upcInput.value.trim();
+            searchError.style.display = 'none';
+            searchResult.style.display = 'none';
+            srMsg.style.display = 'none';
+
+            if (!upc) {
+                searchError.textContent = 'Please enter a UPC to search.';
+                searchError.style.display = 'block';
+                return;
+            }
+
+            srTitle.textContent = 'Sample Pantry Item';
+            srBrand.textContent = 'Demo Brand';
+            srModel.textContent = 'Model X';
+            srCategoryText.textContent = 'Pantry';
+            srUpc.textContent = upc;
+
+            // keep your static image src from the markup
+            srImage.style.display = 'block';
+
+            srQty.value = 1;
+            srExpiry.value = '';
+            srCategorySelect.value = '';
+            srLocation.value = '';
+
+            searchResult.style.display = 'block';
+        });
+
+        btnAdd.addEventListener('click', function () {
+            const data = {
+                upc: srUpc.textContent,
+                title: srTitle.textContent,
+                qty: srQty.value,
+                expiry: srExpiry.value,
+                category: srCategorySelect.value || srCategoryText.textContent,
+                location: srLocation.value
+            };
+
+            console.log('Inventory item (demo only):', data);
+
+            srMsg.textContent = 'Added to inventory (demo only, no database yet).';
+            srMsg.style.display = 'block';
+
+            setTimeout(() => {
+                srMsg.style.display = 'none';
+            }, 2500);
+        });
+    </script>
+}
