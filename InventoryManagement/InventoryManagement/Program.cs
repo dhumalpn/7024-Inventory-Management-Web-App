@@ -1,9 +1,14 @@
-using InventoryManagement.Services;
+﻿using InventoryManagement.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using InventoryManagement.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<InventoryManagementContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("InventoryManagementContext") ?? throw new InvalidOperationException("Connection string 'InventoryManagementContext' not found.")));
 
 // Add memory cache (used by OpenFoodFactsService)
 builder.Services.AddMemoryCache();
