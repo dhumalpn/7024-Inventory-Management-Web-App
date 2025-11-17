@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="~/InventoryManagement.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-earth fixed-top shadow-sm">
+    <header role="banner">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-earth fixed-top shadow-sm" role="navigation" aria-label="Main navigation">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" asp-page="/Index">
                     <img src="~/img/Logo.png" alt="Logo" style="height:28px; margin-right:8px;" asp-append-version="true" />
@@ -45,16 +45,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" role="contentinfo">
         <div class="container">
             &copy; 2025 - InventoryManagement - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/
