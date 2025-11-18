@@ -11,8 +11,8 @@ A key feature of this application is the integration of external data sources to
 
 
 ## II. Icon/Logo
+![LOGO](InventoryManagement/InventoryManagement/wwwroot/img)
 
-**We have not finalized the name of the Web App, based on that we will create our logo**
 
 
 ## III. Storyboard
