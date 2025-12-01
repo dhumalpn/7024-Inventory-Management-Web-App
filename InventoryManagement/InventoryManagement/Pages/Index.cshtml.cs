@@ -26,6 +26,7 @@ namespace InventoryManagement.Pages
         public string? UPC { get; set; }
 
         public Item? SearchedItem { get; set; }
+        public string ? SearchedNutriScoreGrade { get; set; }
 
         public List<Product> Products { get; set; } = new();
 
@@ -56,11 +57,34 @@ namespace InventoryManagement.Pages
             }
 
             var url = $"https://api.upcitemdb.com/prod/trial/lookup?upc={UPC}";
+            var openFoodFactsUrl = $"https://world.openfoodfacts.net/api/v2/product/{UPC}";
 
             HttpResponseMessage response;
             try
             {
-                response = await client.GetAsync(url);
+                var upcTask = client.GetAsync(url);
+                var offTask = client.GetAsync(openFoodFactsUrl);
+
+                await Task.WhenAll(upcTask, offTask);
+
+                response = upcTask.Result;
+
+                try
+                {
+                    var offResponse = offTask.Result;
+                    if (offResponse.IsSuccessStatusCode)
+                    {
+                        var offJson = await offResponse.Content.ReadAsStringAsync();
+                        var obj = FoodFactsResponse.FromJson(offJson);
+                        // Extract product.nutriscore_grade if present
+                        SearchedNutriScoreGrade = obj.Product.NutriscoreGrade;
+                    }
+                }
+                catch (Exception exOff)
+                {
+                    _logger.LogWarning(exOff, "Error calling or parsing OpenFoodFacts for UPC {UPC}", UPC);
+                    SearchedNutriScoreGrade = null; // optional field, do not fail search
+                }
             }
             catch (Exception ex)
             {
