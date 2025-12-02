@@ -13,6 +13,9 @@ builder.Services.AddDbContext<InventoryManagementContext>(options =>
 // Add memory cache (used by OpenFoodFactsService)
 builder.Services.AddMemoryCache();
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
 // Register OpenFoodFactsService with a typed HttpClient
 builder.Services.AddHttpClient<OpenFoodFactsService>(client =>
 {
@@ -36,5 +39,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapControllers();
 
 app.Run();
